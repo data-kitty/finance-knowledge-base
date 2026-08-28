@@ -1,0 +1,15 @@
+# 环境与密钥
+.env
+.env.example
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# IDE
+.idea/
+.DS_Store

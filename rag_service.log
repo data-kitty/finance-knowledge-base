@@ -1,0 +1,362 @@
+/Users/cuixiaojing/Documents/Project_pycharm/finance-customer-service/finance-customer-service-backend/.venv/lib/python3.12/site-packages/pymilvus/client/__init__.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import DistributionNotFound, get_distribution
+INFO:     Started server process [55275]
+INFO:     Waiting for application startup.
+2026-08-28 11:01:15,313 [INFO] finance_knowledge_rag.api.app: Starting Finance Knowledge RAG Service...
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:18082 (Press CTRL+C to quit)
+INFO:     127.0.0.1:64596 - "GET /health HTTP/1.1" 200 OK
+2026-08-28 11:01:18,804 [INFO] finance_knowledge_rag.query_process.base: [node_intent_confirm] starting...
+2026-08-28 11:01:19,025 [INFO] finance_knowledge_rag.utils.mongo: MongoDB connected: db=finance_rag
+2026-08-28 11:01:19,110 [INFO] langchain_openai.chat_models._client_utils: langchain-openai detected system proxy configuration and no explicit `http_socket_options` / `http_client` / `http_async_client` / `openai_proxy`; skipping the custom `httpx` transport so httpx's env-proxy auto-detection applies. Pass `http_socket_options=[...]` to opt back into kernel-level TCP keepalive tuning on top of the env proxy.
+2026-08-28 11:01:19,301 [INFO] finance_knowledge_rag.utils.llm: LLM client created: model=deepseek-chat, json_mode=True
+2026-08-28 11:01:19,522 [INFO] httpx2: HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-28 11:01:20,372 [INFO] finance_knowledge_rag.query_process.nodes.node_intent_confirm: Extracted topics: ['风控与反洗钱'], rewritten: '反洗钱的大额交易报告标准是多少？'
+2026-08-28 11:01:20,429 [INFO] finance_knowledge_rag.utils.embedding: Loading BGE-M3 model from '/Users/cuixiaojing/Documents/Project_pycharm/01_knowledge-base/knowledge/atguigu/import_process/ai_models/models/BAAI/bge-m3' (device=cpu, fp16=False)
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]Loading weights: 100%|██████████| 391/391 [00:00<00:00, 54005.10it/s]
+2026-08-28 11:01:21,594 [INFO] FlagEmbedding.finetune.embedder.encoder_only.m3.runner: loading existing colbert_linear and sparse_linear---------
+2026-08-28 11:01:21,597 [INFO] finance_knowledge_rag.utils.embedding: BGE-M3 model loaded successfully
+2026-08-28 11:01:24,304 [DEBUG] pymilvus.milvus_client.milvus_client: Created new connection using: 68c352de042944f09494fdc8aa290655
+2026-08-28 11:01:24,304 [INFO] finance_knowledge_rag.utils.milvus_utils: Milvus client connected to http://81.70.232.147:19530
+2026-08-28 11:01:24,353 [INFO] finance_knowledge_rag.utils.milvus_utils: Hybrid search completed on 'finance_item_names'
+2026-08-28 11:01:24,395 [INFO] finance_knowledge_rag.query_process.base: [node_intent_confirm] finished
+2026-08-28 11:01:24,399 [INFO] finance_knowledge_rag.query_process.base: [node_search_embedding] starting...
+2026-08-28 11:01:24,701 [INFO] finance_knowledge_rag.utils.milvus_utils: Hybrid search completed on 'finance_chunks'
+2026-08-28 11:01:24,701 [INFO] finance_knowledge_rag.query_process.base: [node_search_embedding] finished
+2026-08-28 11:01:24,701 [INFO] finance_knowledge_rag.query_process.base: [node_rrf] starting...
+2026-08-28 11:01:24,701 [INFO] finance_knowledge_rag.query_process.nodes.node_rrf: RRF fusion: 10 input -> 5 output
+2026-08-28 11:01:24,701 [INFO] finance_knowledge_rag.query_process.base: [node_rrf] finished
+2026-08-28 11:01:24,701 [INFO] finance_knowledge_rag.query_process.base: [node_rerank] starting...
+2026-08-28 11:01:25,351 [WARNING] finance_knowledge_rag.query_process.nodes.node_rerank: Reranker unavailable (Reranker API call failed: status_code=401, message=Invalid API-key provided.), fallback to RRF order
+2026-08-28 11:01:25,352 [INFO] finance_knowledge_rag.query_process.nodes.node_rerank: Rerank: 5 input -> 5 output
+2026-08-28 11:01:25,352 [INFO] finance_knowledge_rag.query_process.base: [node_rerank] finished
+2026-08-28 11:01:25,353 [INFO] finance_knowledge_rag.query_process.base: [node_answer_output] starting...
+2026-08-28 11:01:25,355 [INFO] finance_knowledge_rag.utils.llm: LLM client created: model=deepseek-chat, json_mode=False
+2026-08-28 11:01:25,502 [INFO] httpx2: HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-28 11:01:27,122 [INFO] finance_knowledge_rag.query_process.base: [node_answer_output] finished
+INFO:     127.0.0.1:64597 - "POST /api/rag/query HTTP/1.1" 200 OK
+2026-08-28 11:01:37,197 [INFO] finance_knowledge_rag.query_process.base: [node_intent_confirm] starting...
+2026-08-28 11:01:37,452 [INFO] httpx2: HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-28 11:01:38,145 [INFO] finance_knowledge_rag.query_process.nodes.node_intent_confirm: Extracted topics: ['风控与反洗钱'], rewritten: '反洗钱的大额交易报告标准是多少？'
+2026-08-28 11:01:38,442 [INFO] finance_knowledge_rag.utils.milvus_utils: Hybrid search completed on 'finance_item_names'
+2026-08-28 11:01:38,525 [INFO] finance_knowledge_rag.query_process.base: [node_intent_confirm] finished
+2026-08-28 11:01:38,526 [INFO] finance_knowledge_rag.query_process.base: [node_search_embedding] starting...
+2026-08-28 11:01:38,820 [INFO] finance_knowledge_rag.utils.milvus_utils: Hybrid search completed on 'finance_chunks'
+2026-08-28 11:01:38,820 [INFO] finance_knowledge_rag.query_process.base: [node_search_embedding] finished
+2026-08-28 11:01:38,820 [INFO] finance_knowledge_rag.query_process.base: [node_rrf] starting...
+2026-08-28 11:01:38,820 [INFO] finance_knowledge_rag.query_process.nodes.node_rrf: RRF fusion: 10 input -> 5 output
+2026-08-28 11:01:38,820 [INFO] finance_knowledge_rag.query_process.base: [node_rrf] finished
+2026-08-28 11:01:38,820 [INFO] finance_knowledge_rag.query_process.base: [node_rerank] starting...
+2026-08-28 11:01:38,988 [WARNING] finance_knowledge_rag.query_process.nodes.node_rerank: Reranker unavailable (Reranker API call failed: status_code=401, message=Invalid API-key provided.), fallback to RRF order
+2026-08-28 11:01:38,988 [INFO] finance_knowledge_rag.query_process.nodes.node_rerank: Rerank: 5 input -> 5 output
+2026-08-28 11:01:38,988 [INFO] finance_knowledge_rag.query_process.base: [node_rerank] finished
+2026-08-28 11:01:38,989 [INFO] finance_knowledge_rag.query_process.base: [node_answer_output] starting...
+2026-08-28 11:01:39,087 [INFO] httpx2: HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-28 11:01:40,995 [INFO] finance_knowledge_rag.query_process.base: [node_answer_output] finished
+INFO:     127.0.0.1:64617 - "POST /api/rag/query HTTP/1.1" 200 OK
+2026-08-28 11:01:49,601 [INFO] finance_knowledge_rag.import_process.base: [node_entry] starting...
+2026-08-28 11:01:49,601 [INFO] finance_knowledge_rag.import_process.base: [node_entry] finished in 0.00s
+2026-08-28 11:01:49,601 [INFO] finance_knowledge_rag.import_process.base: [node_md_parse] starting...
+2026-08-28 11:01:49,601 [INFO] finance_knowledge_rag.import_process.nodes.node_md_parse: Read markdown file: /Users/cuixiaojing/Documents/Project_pycharm/finance-customer-service/finance-customer-service-backend/finance-knowledge-RAG/knowledge_docs/01_个人贷款业务指南.md (1882 chars)
+2026-08-28 11:01:49,601 [INFO] finance_knowledge_rag.import_process.base: [node_md_parse] finished in 0.00s
+2026-08-28 11:01:49,602 [INFO] finance_knowledge_rag.import_process.base: [node_document_split] starting...
+2026-08-28 11:01:49,602 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Initial split: 17 headings, 17 sections, 99 lines
+2026-08-28 11:01:49,602 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: After splitting long sections: 17 chunks
+2026-08-28 11:01:49,602 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 42 chars
+2026-08-28 11:01:49,602 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 246 chars
+2026-08-28 11:01:49,602 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 193 chars
+2026-08-28 11:01:49,602 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 71 chars
+2026-08-28 11:01:49,602 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 133 chars
+2026-08-28 11:01:49,602 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 89 chars
+2026-08-28 11:01:49,602 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 268 chars
+2026-08-28 11:01:49,602 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: After merging short sections: 10 chunks
+2026-08-28 11:01:49,602 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Final refined chunks: 10
+2026-08-28 11:01:49,602 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: -------------------------------------------------- document split stats --------------------------------------------------
+2026-08-28 11:01:49,602 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: MD total lines: 99
+2026-08-28 11:01:49,602 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Final chunk count: 10
+2026-08-28 11:01:49,602 [INFO] finance_knowledge_rag.import_process.base: [node_document_split] finished in 0.00s
+2026-08-28 11:01:49,602 [INFO] finance_knowledge_rag.import_process.base: [node_item_extract] starting...
+2026-08-28 11:01:49,776 [INFO] httpx2: HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-28 11:01:51,316 [INFO] finance_knowledge_rag.import_process.nodes.node_item_extract: Saved topic '个人贷款' to collection 'finance_item_names'
+2026-08-28 11:01:51,317 [INFO] finance_knowledge_rag.import_process.nodes.node_item_extract: Finance topic recognized: '个人贷款' (file: 01_个人贷款业务指南)
+2026-08-28 11:01:51,317 [INFO] finance_knowledge_rag.import_process.base: [node_item_extract] finished in 1.71s
+2026-08-28 11:01:51,318 [INFO] finance_knowledge_rag.import_process.base: [node_embedding] starting...
+2026-08-28 11:01:52,218 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedded batch 1-3 / 10
+2026-08-28 11:01:53,010 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedded batch 4-6 / 10
+2026-08-28 11:01:54,186 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedded batch 7-9 / 10
+2026-08-28 11:01:54,536 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedded batch 10-10 / 10
+2026-08-28 11:01:54,537 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedding complete: 10 chunks
+2026-08-28 11:01:54,537 [INFO] finance_knowledge_rag.import_process.base: [node_embedding] finished in 3.22s
+2026-08-28 11:01:54,537 [INFO] finance_knowledge_rag.import_process.base: [node_import_milvus] starting...
+2026-08-28 11:01:54,819 [INFO] finance_knowledge_rag.import_process.nodes.node_import_milvus: Cleaned old data for file_title='01_个人贷款业务指南'
+2026-08-28 11:01:54,962 [INFO] finance_knowledge_rag.import_process.nodes.node_import_milvus: Inserted 10 chunks to 'finance_chunks'
+2026-08-28 11:01:54,962 [INFO] finance_knowledge_rag.import_process.base: [node_import_milvus] finished in 0.43s
+2026-08-28 11:01:54,963 [INFO] finance_knowledge_rag.rag_service: Imported '01_个人贷款业务指南': 10 chunks, item_name='个人贷款'
+2026-08-28 11:01:54,966 [INFO] finance_knowledge_rag.import_process.base: [node_entry] starting...
+2026-08-28 11:01:54,966 [INFO] finance_knowledge_rag.import_process.base: [node_entry] finished in 0.00s
+2026-08-28 11:01:54,966 [INFO] finance_knowledge_rag.import_process.base: [node_md_parse] starting...
+2026-08-28 11:01:54,968 [INFO] finance_knowledge_rag.import_process.nodes.node_md_parse: Read markdown file: /Users/cuixiaojing/Documents/Project_pycharm/finance-customer-service/finance-customer-service-backend/finance-knowledge-RAG/knowledge_docs/02_理财产品投资指南.md (2145 chars)
+2026-08-28 11:01:54,968 [INFO] finance_knowledge_rag.import_process.base: [node_md_parse] finished in 0.00s
+2026-08-28 11:01:54,968 [INFO] finance_knowledge_rag.import_process.base: [node_document_split] starting...
+2026-08-28 11:01:54,968 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Initial split: 20 headings, 20 sections, 115 lines
+2026-08-28 11:01:54,968 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: After splitting long sections: 20 chunks
+2026-08-28 11:01:54,968 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 42 chars
+2026-08-28 11:01:54,968 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 177 chars
+2026-08-28 11:01:54,968 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 361 chars
+2026-08-28 11:01:54,968 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 192 chars
+2026-08-28 11:01:54,968 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 177 chars
+2026-08-28 11:01:54,968 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 123 chars
+2026-08-28 11:01:54,968 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 119 chars
+2026-08-28 11:01:54,968 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 266 chars
+2026-08-28 11:01:54,968 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: After merging short sections: 12 chunks
+2026-08-28 11:01:54,968 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Final refined chunks: 12
+2026-08-28 11:01:54,968 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: -------------------------------------------------- document split stats --------------------------------------------------
+2026-08-28 11:01:54,969 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: MD total lines: 115
+2026-08-28 11:01:54,969 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Final chunk count: 12
+2026-08-28 11:01:54,969 [INFO] finance_knowledge_rag.import_process.base: [node_document_split] finished in 0.00s
+2026-08-28 11:01:54,969 [INFO] finance_knowledge_rag.import_process.base: [node_item_extract] starting...
+2026-08-28 11:01:55,065 [INFO] httpx2: HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-28 11:01:56,312 [INFO] finance_knowledge_rag.import_process.nodes.node_item_extract: Saved topic '理财产品' to collection 'finance_item_names'
+2026-08-28 11:01:56,312 [INFO] finance_knowledge_rag.import_process.nodes.node_item_extract: Finance topic recognized: '理财产品' (file: 02_理财产品投资指南)
+2026-08-28 11:01:56,312 [INFO] finance_knowledge_rag.import_process.base: [node_item_extract] finished in 1.34s
+2026-08-28 11:01:56,313 [INFO] finance_knowledge_rag.import_process.base: [node_embedding] starting...
+2026-08-28 11:01:56,967 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedded batch 1-3 / 12
+2026-08-28 11:01:58,411 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedded batch 4-6 / 12
+2026-08-28 11:01:59,042 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedded batch 7-9 / 12
+2026-08-28 11:02:00,015 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedded batch 10-12 / 12
+2026-08-28 11:02:00,015 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedding complete: 12 chunks
+2026-08-28 11:02:00,015 [INFO] finance_knowledge_rag.import_process.base: [node_embedding] finished in 3.70s
+2026-08-28 11:02:00,016 [INFO] finance_knowledge_rag.import_process.base: [node_import_milvus] starting...
+2026-08-28 11:02:00,420 [INFO] finance_knowledge_rag.import_process.nodes.node_import_milvus: Cleaned old data for file_title='02_理财产品投资指南'
+2026-08-28 11:02:00,523 [INFO] finance_knowledge_rag.import_process.nodes.node_import_milvus: Inserted 12 chunks to 'finance_chunks'
+2026-08-28 11:02:00,524 [INFO] finance_knowledge_rag.import_process.base: [node_import_milvus] finished in 0.51s
+2026-08-28 11:02:00,525 [INFO] finance_knowledge_rag.rag_service: Imported '02_理财产品投资指南': 12 chunks, item_name='理财产品'
+2026-08-28 11:02:00,531 [INFO] finance_knowledge_rag.import_process.base: [node_entry] starting...
+2026-08-28 11:02:00,531 [INFO] finance_knowledge_rag.import_process.base: [node_entry] finished in 0.00s
+2026-08-28 11:02:00,531 [INFO] finance_knowledge_rag.import_process.base: [node_md_parse] starting...
+2026-08-28 11:02:00,534 [INFO] finance_knowledge_rag.import_process.nodes.node_md_parse: Read markdown file: /Users/cuixiaojing/Documents/Project_pycharm/finance-customer-service/finance-customer-service-backend/finance-knowledge-RAG/knowledge_docs/03_信用卡业务指南.md (2098 chars)
+2026-08-28 11:02:00,534 [INFO] finance_knowledge_rag.import_process.base: [node_md_parse] finished in 0.00s
+2026-08-28 11:02:00,535 [INFO] finance_knowledge_rag.import_process.base: [node_document_split] starting...
+2026-08-28 11:02:00,535 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Initial split: 24 headings, 24 sections, 122 lines
+2026-08-28 11:02:00,535 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: After splitting long sections: 24 chunks
+2026-08-28 11:02:00,535 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 40 chars
+2026-08-28 11:02:00,536 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 160 chars
+2026-08-28 11:02:00,536 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 119 chars
+2026-08-28 11:02:00,536 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 96 chars
+2026-08-28 11:02:00,536 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 208 chars
+2026-08-28 11:02:00,536 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 104 chars
+2026-08-28 11:02:00,536 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 77 chars
+2026-08-28 11:02:00,536 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 215 chars
+2026-08-28 11:02:00,536 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 125 chars
+2026-08-28 11:02:00,536 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: After merging short sections: 15 chunks
+2026-08-28 11:02:00,536 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Final refined chunks: 15
+2026-08-28 11:02:00,536 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: -------------------------------------------------- document split stats --------------------------------------------------
+2026-08-28 11:02:00,536 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: MD total lines: 122
+2026-08-28 11:02:00,536 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Final chunk count: 15
+2026-08-28 11:02:00,536 [INFO] finance_knowledge_rag.import_process.base: [node_document_split] finished in 0.00s
+2026-08-28 11:02:00,536 [INFO] finance_knowledge_rag.import_process.base: [node_item_extract] starting...
+2026-08-28 11:02:00,640 [INFO] httpx2: HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-28 11:02:01,713 [INFO] finance_knowledge_rag.import_process.nodes.node_item_extract: Saved topic '信用卡' to collection 'finance_item_names'
+2026-08-28 11:02:01,713 [INFO] finance_knowledge_rag.import_process.nodes.node_item_extract: Finance topic recognized: '信用卡' (file: 03_信用卡业务指南)
+2026-08-28 11:02:01,713 [INFO] finance_knowledge_rag.import_process.base: [node_item_extract] finished in 1.18s
+2026-08-28 11:02:01,715 [INFO] finance_knowledge_rag.import_process.base: [node_embedding] starting...
+2026-08-28 11:02:02,335 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedded batch 1-3 / 15
+2026-08-28 11:02:02,882 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedded batch 4-6 / 15
+2026-08-28 11:02:03,701 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedded batch 7-9 / 15
+2026-08-28 11:02:04,557 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedded batch 10-12 / 15
+2026-08-28 11:02:05,223 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedded batch 13-15 / 15
+2026-08-28 11:02:05,223 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedding complete: 15 chunks
+2026-08-28 11:02:05,223 [INFO] finance_knowledge_rag.import_process.base: [node_embedding] finished in 3.51s
+2026-08-28 11:02:05,224 [INFO] finance_knowledge_rag.import_process.base: [node_import_milvus] starting...
+2026-08-28 11:02:05,819 [INFO] finance_knowledge_rag.import_process.nodes.node_import_milvus: Cleaned old data for file_title='03_信用卡业务指南'
+2026-08-28 11:02:05,926 [INFO] finance_knowledge_rag.import_process.nodes.node_import_milvus: Inserted 15 chunks to 'finance_chunks'
+2026-08-28 11:02:05,927 [INFO] finance_knowledge_rag.import_process.base: [node_import_milvus] finished in 0.70s
+2026-08-28 11:02:05,929 [INFO] finance_knowledge_rag.rag_service: Imported '03_信用卡业务指南': 15 chunks, item_name='信用卡'
+2026-08-28 11:02:05,933 [INFO] finance_knowledge_rag.import_process.base: [node_entry] starting...
+2026-08-28 11:02:05,933 [INFO] finance_knowledge_rag.import_process.base: [node_entry] finished in 0.00s
+2026-08-28 11:02:05,934 [INFO] finance_knowledge_rag.import_process.base: [node_md_parse] starting...
+2026-08-28 11:02:05,935 [INFO] finance_knowledge_rag.import_process.nodes.node_md_parse: Read markdown file: /Users/cuixiaojing/Documents/Project_pycharm/finance-customer-service/finance-customer-service-backend/finance-knowledge-RAG/knowledge_docs/04_账户与交易业务指南.md (2186 chars)
+2026-08-28 11:02:05,935 [INFO] finance_knowledge_rag.import_process.base: [node_md_parse] finished in 0.00s
+2026-08-28 11:02:05,935 [INFO] finance_knowledge_rag.import_process.base: [node_document_split] starting...
+2026-08-28 11:02:05,936 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Initial split: 22 headings, 22 sections, 128 lines
+2026-08-28 11:02:05,936 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: After splitting long sections: 22 chunks
+2026-08-28 11:02:05,936 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 60 chars
+2026-08-28 11:02:05,936 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 215 chars
+2026-08-28 11:02:05,936 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 218 chars
+2026-08-28 11:02:05,936 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 105 chars
+2026-08-28 11:02:05,936 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 81 chars
+2026-08-28 11:02:05,936 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 207 chars
+2026-08-28 11:02:05,936 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 74 chars
+2026-08-28 11:02:05,936 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 170 chars
+2026-08-28 11:02:05,936 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: After merging short sections: 14 chunks
+2026-08-28 11:02:05,936 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Final refined chunks: 14
+2026-08-28 11:02:05,936 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: -------------------------------------------------- document split stats --------------------------------------------------
+2026-08-28 11:02:05,936 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: MD total lines: 128
+2026-08-28 11:02:05,936 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Final chunk count: 14
+2026-08-28 11:02:05,936 [INFO] finance_knowledge_rag.import_process.base: [node_document_split] finished in 0.00s
+2026-08-28 11:02:05,937 [INFO] finance_knowledge_rag.import_process.base: [node_item_extract] starting...
+2026-08-28 11:02:06,087 [INFO] httpx2: HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-28 11:02:07,520 [INFO] finance_knowledge_rag.import_process.nodes.node_item_extract: Saved topic '账户与交易' to collection 'finance_item_names'
+2026-08-28 11:02:07,520 [INFO] finance_knowledge_rag.import_process.nodes.node_item_extract: Finance topic recognized: '账户与交易' (file: 04_账户与交易业务指南)
+2026-08-28 11:02:07,520 [INFO] finance_knowledge_rag.import_process.base: [node_item_extract] finished in 1.58s
+2026-08-28 11:02:07,522 [INFO] finance_knowledge_rag.import_process.base: [node_embedding] starting...
+2026-08-28 11:02:08,284 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedded batch 1-3 / 14
+2026-08-28 11:02:08,943 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedded batch 4-6 / 14
+2026-08-28 11:02:09,641 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedded batch 7-9 / 14
+2026-08-28 11:02:10,343 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedded batch 10-12 / 14
+2026-08-28 11:02:10,831 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedded batch 13-14 / 14
+2026-08-28 11:02:10,831 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedding complete: 14 chunks
+2026-08-28 11:02:10,831 [INFO] finance_knowledge_rag.import_process.base: [node_embedding] finished in 3.31s
+2026-08-28 11:02:10,831 [INFO] finance_knowledge_rag.import_process.base: [node_import_milvus] starting...
+2026-08-28 11:02:11,220 [INFO] finance_knowledge_rag.import_process.nodes.node_import_milvus: Cleaned old data for file_title='04_账户与交易业务指南'
+2026-08-28 11:02:11,323 [INFO] finance_knowledge_rag.import_process.nodes.node_import_milvus: Inserted 14 chunks to 'finance_chunks'
+2026-08-28 11:02:11,323 [INFO] finance_knowledge_rag.import_process.base: [node_import_milvus] finished in 0.49s
+2026-08-28 11:02:11,324 [INFO] finance_knowledge_rag.rag_service: Imported '04_账户与交易业务指南': 14 chunks, item_name='账户与交易'
+2026-08-28 11:02:11,328 [INFO] finance_knowledge_rag.import_process.base: [node_entry] starting...
+2026-08-28 11:02:11,328 [INFO] finance_knowledge_rag.import_process.base: [node_entry] finished in 0.00s
+2026-08-28 11:02:11,328 [INFO] finance_knowledge_rag.import_process.base: [node_md_parse] starting...
+2026-08-28 11:02:11,329 [INFO] finance_knowledge_rag.import_process.nodes.node_md_parse: Read markdown file: /Users/cuixiaojing/Documents/Project_pycharm/finance-customer-service/finance-customer-service-backend/finance-knowledge-RAG/knowledge_docs/05_风控与反洗钱业务指南.md (2518 chars)
+2026-08-28 11:02:11,330 [INFO] finance_knowledge_rag.import_process.base: [node_md_parse] finished in 0.00s
+2026-08-28 11:02:11,330 [INFO] finance_knowledge_rag.import_process.base: [node_document_split] starting...
+2026-08-28 11:02:11,330 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Initial split: 22 headings, 22 sections, 142 lines
+2026-08-28 11:02:11,331 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: After splitting long sections: 22 chunks
+2026-08-28 11:02:11,331 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 60 chars
+2026-08-28 11:02:11,331 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 275 chars
+2026-08-28 11:02:11,331 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 296 chars
+2026-08-28 11:02:11,331 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 165 chars
+2026-08-28 11:02:11,331 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 166 chars
+2026-08-28 11:02:11,331 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 161 chars
+2026-08-28 11:02:11,331 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 137 chars
+2026-08-28 11:02:11,331 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 161 chars
+2026-08-28 11:02:11,331 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: After merging short sections: 14 chunks
+2026-08-28 11:02:11,331 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Final refined chunks: 14
+2026-08-28 11:02:11,331 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: -------------------------------------------------- document split stats --------------------------------------------------
+2026-08-28 11:02:11,331 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: MD total lines: 142
+2026-08-28 11:02:11,331 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Final chunk count: 14
+2026-08-28 11:02:11,331 [INFO] finance_knowledge_rag.import_process.base: [node_document_split] finished in 0.00s
+2026-08-28 11:02:11,332 [INFO] finance_knowledge_rag.import_process.base: [node_item_extract] starting...
+2026-08-28 11:02:11,628 [INFO] httpx2: HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-28 11:02:12,716 [INFO] finance_knowledge_rag.import_process.nodes.node_item_extract: Saved topic '风控与反洗钱' to collection 'finance_item_names'
+2026-08-28 11:02:12,716 [INFO] finance_knowledge_rag.import_process.nodes.node_item_extract: Finance topic recognized: '风控与反洗钱' (file: 05_风控与反洗钱业务指南)
+2026-08-28 11:02:12,716 [INFO] finance_knowledge_rag.import_process.base: [node_item_extract] finished in 1.38s
+2026-08-28 11:02:12,718 [INFO] finance_knowledge_rag.import_process.base: [node_embedding] starting...
+2026-08-28 11:02:13,822 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedded batch 1-3 / 14
+2026-08-28 11:02:14,476 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedded batch 4-6 / 14
+2026-08-28 11:02:15,181 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedded batch 7-9 / 14
+2026-08-28 11:02:15,814 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedded batch 10-12 / 14
+2026-08-28 11:02:16,408 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedded batch 13-14 / 14
+2026-08-28 11:02:16,408 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedding complete: 14 chunks
+2026-08-28 11:02:16,408 [INFO] finance_knowledge_rag.import_process.base: [node_embedding] finished in 3.69s
+2026-08-28 11:02:16,409 [INFO] finance_knowledge_rag.import_process.base: [node_import_milvus] starting...
+2026-08-28 11:02:16,820 [INFO] finance_knowledge_rag.import_process.nodes.node_import_milvus: Cleaned old data for file_title='05_风控与反洗钱业务指南'
+2026-08-28 11:02:16,925 [INFO] finance_knowledge_rag.import_process.nodes.node_import_milvus: Inserted 14 chunks to 'finance_chunks'
+2026-08-28 11:02:16,925 [INFO] finance_knowledge_rag.import_process.base: [node_import_milvus] finished in 0.52s
+2026-08-28 11:02:16,927 [INFO] finance_knowledge_rag.rag_service: Imported '05_风控与反洗钱业务指南': 14 chunks, item_name='风控与反洗钱'
+2026-08-28 11:02:16,932 [INFO] finance_knowledge_rag.import_process.base: [node_entry] starting...
+2026-08-28 11:02:16,932 [INFO] finance_knowledge_rag.import_process.base: [node_entry] finished in 0.00s
+2026-08-28 11:02:16,932 [INFO] finance_knowledge_rag.import_process.base: [node_md_parse] starting...
+2026-08-28 11:02:16,934 [INFO] finance_knowledge_rag.import_process.nodes.node_md_parse: Read markdown file: /Users/cuixiaojing/Documents/Project_pycharm/finance-customer-service/finance-customer-service-backend/finance-knowledge-RAG/knowledge_docs/06_金融常见问题FAQ.md (2004 chars)
+2026-08-28 11:02:16,934 [INFO] finance_knowledge_rag.import_process.base: [node_md_parse] finished in 0.00s
+2026-08-28 11:02:16,934 [INFO] finance_knowledge_rag.import_process.base: [node_document_split] starting...
+2026-08-28 11:02:16,935 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Initial split: 6 headings, 6 sections, 66 lines
+2026-08-28 11:02:16,935 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Splitting long section: ## 风险提示
+2026-08-28 11:02:16,935 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: After splitting long sections: 7 chunks
+2026-08-28 11:02:16,935 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Merged short chunk: None -> 371 chars
+2026-08-28 11:02:16,935 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: After merging short sections: 6 chunks
+2026-08-28 11:02:16,935 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Final refined chunks: 6
+2026-08-28 11:02:16,935 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: -------------------------------------------------- document split stats --------------------------------------------------
+2026-08-28 11:02:16,935 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: MD total lines: 66
+2026-08-28 11:02:16,935 [INFO] finance_knowledge_rag.import_process.nodes.node_document_split: Final chunk count: 6
+2026-08-28 11:02:16,935 [INFO] finance_knowledge_rag.import_process.base: [node_document_split] finished in 0.00s
+2026-08-28 11:02:16,936 [INFO] finance_knowledge_rag.import_process.base: [node_item_extract] starting...
+2026-08-28 11:02:17,150 [INFO] httpx2: HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-28 11:02:18,114 [INFO] finance_knowledge_rag.import_process.nodes.node_item_extract: Saved topic '金融常见问题' to collection 'finance_item_names'
+2026-08-28 11:02:18,114 [INFO] finance_knowledge_rag.import_process.nodes.node_item_extract: Finance topic recognized: '金融常见问题' (file: 06_金融常见问题FAQ)
+2026-08-28 11:02:18,114 [INFO] finance_knowledge_rag.import_process.base: [node_item_extract] finished in 1.18s
+2026-08-28 11:02:18,116 [INFO] finance_knowledge_rag.import_process.base: [node_embedding] starting...
+2026-08-28 11:02:19,889 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedded batch 1-3 / 6
+2026-08-28 11:02:21,549 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedded batch 4-6 / 6
+2026-08-28 11:02:21,549 [INFO] finance_knowledge_rag.import_process.nodes.node_embedding: Embedding complete: 6 chunks
+2026-08-28 11:02:21,549 [INFO] finance_knowledge_rag.import_process.base: [node_embedding] finished in 3.43s
+2026-08-28 11:02:21,550 [INFO] finance_knowledge_rag.import_process.base: [node_import_milvus] starting...
+2026-08-28 11:02:22,019 [INFO] finance_knowledge_rag.import_process.nodes.node_import_milvus: Cleaned old data for file_title='06_金融常见问题FAQ'
+2026-08-28 11:02:22,120 [INFO] finance_knowledge_rag.import_process.nodes.node_import_milvus: Inserted 6 chunks to 'finance_chunks'
+2026-08-28 11:02:22,120 [INFO] finance_knowledge_rag.import_process.base: [node_import_milvus] finished in 0.57s
+2026-08-28 11:02:22,123 [INFO] finance_knowledge_rag.rag_service: Imported '06_金融常见问题FAQ': 6 chunks, item_name='金融常见问题'
+INFO:     127.0.0.1:64628 - "POST /api/rag/import HTTP/1.1" 200 OK
+2026-08-28 11:02:27,015 [INFO] finance_knowledge_rag.query_process.base: [node_intent_confirm] starting...
+2026-08-28 11:02:27,290 [INFO] httpx2: HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-28 11:02:27,667 [INFO] finance_knowledge_rag.query_process.nodes.node_intent_confirm: Extracted topics: ['理财'], rewritten: '理财产品赎回流程是怎样的？'
+2026-08-28 11:02:27,975 [INFO] finance_knowledge_rag.utils.milvus_utils: Hybrid search completed on 'finance_item_names'
+2026-08-28 11:02:28,016 [INFO] finance_knowledge_rag.query_process.base: [node_intent_confirm] finished
+2026-08-28 11:02:28,016 [INFO] finance_knowledge_rag.query_process.base: [node_search_embedding] starting...
+2026-08-28 11:02:28,315 [INFO] finance_knowledge_rag.utils.milvus_utils: Hybrid search completed on 'finance_chunks'
+2026-08-28 11:02:28,315 [INFO] finance_knowledge_rag.query_process.base: [node_search_embedding] finished
+2026-08-28 11:02:28,315 [INFO] finance_knowledge_rag.query_process.base: [node_rrf] starting...
+2026-08-28 11:02:28,315 [INFO] finance_knowledge_rag.query_process.nodes.node_rrf: RRF fusion: 10 input -> 5 output
+2026-08-28 11:02:28,315 [INFO] finance_knowledge_rag.query_process.base: [node_rrf] finished
+2026-08-28 11:02:28,315 [INFO] finance_knowledge_rag.query_process.base: [node_rerank] starting...
+2026-08-28 11:02:28,485 [WARNING] finance_knowledge_rag.query_process.nodes.node_rerank: Reranker unavailable (Reranker API call failed: status_code=401, message=Invalid API-key provided.), fallback to RRF order
+2026-08-28 11:02:28,485 [INFO] finance_knowledge_rag.query_process.nodes.node_rerank: Rerank: 5 input -> 5 output
+2026-08-28 11:02:28,485 [INFO] finance_knowledge_rag.query_process.base: [node_rerank] finished
+2026-08-28 11:02:28,486 [INFO] finance_knowledge_rag.query_process.base: [node_answer_output] starting...
+2026-08-28 11:02:28,589 [INFO] httpx2: HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-28 11:02:31,152 [INFO] finance_knowledge_rag.query_process.base: [node_answer_output] finished
+INFO:     127.0.0.1:64652 - "POST /api/rag/query HTTP/1.1" 200 OK
+2026-08-28 11:15:04,612 [INFO] finance_knowledge_rag.query_process.base: [node_intent_confirm] starting...
+2026-08-28 11:15:04,874 [INFO] httpx2: HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-28 11:15:05,830 [INFO] finance_knowledge_rag.query_process.nodes.node_intent_confirm: Extracted topics: ['风控与反洗钱'], rewritten: '反洗钱的大额交易报告标准是多少？'
+2026-08-28 11:15:06,306 [INFO] finance_knowledge_rag.utils.milvus_utils: Hybrid search completed on 'finance_item_names'
+2026-08-28 11:15:06,389 [INFO] finance_knowledge_rag.query_process.base: [node_intent_confirm] finished
+2026-08-28 11:15:06,390 [INFO] finance_knowledge_rag.query_process.base: [node_search_embedding] starting...
+2026-08-28 11:15:06,685 [INFO] finance_knowledge_rag.utils.milvus_utils: Hybrid search completed on 'finance_chunks'
+2026-08-28 11:15:06,685 [INFO] finance_knowledge_rag.query_process.base: [node_search_embedding] finished
+2026-08-28 11:15:06,685 [INFO] finance_knowledge_rag.query_process.base: [node_rrf] starting...
+2026-08-28 11:15:06,685 [INFO] finance_knowledge_rag.query_process.nodes.node_rrf: RRF fusion: 10 input -> 5 output
+2026-08-28 11:15:06,685 [INFO] finance_knowledge_rag.query_process.base: [node_rrf] finished
+2026-08-28 11:15:06,685 [INFO] finance_knowledge_rag.query_process.base: [node_rerank] starting...
+2026-08-28 11:15:12,537 [WARNING] finance_knowledge_rag.query_process.nodes.node_rerank: Reranker unavailable (Reranker API call failed: status_code=401, message=Invalid API-key provided.), fallback to RRF order
+2026-08-28 11:15:12,537 [INFO] finance_knowledge_rag.query_process.nodes.node_rerank: Rerank: 5 input -> 5 output
+2026-08-28 11:15:12,537 [INFO] finance_knowledge_rag.query_process.base: [node_rerank] finished
+2026-08-28 11:15:12,538 [INFO] finance_knowledge_rag.query_process.base: [node_answer_output] starting...
+2026-08-28 11:15:12,745 [INFO] httpx2: HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-28 11:15:13,944 [INFO] finance_knowledge_rag.query_process.base: [node_answer_output] finished
+INFO:     127.0.0.1:65524 - "POST /api/rag/query HTTP/1.1" 200 OK
+2026-08-28 11:15:42,930 [INFO] finance_knowledge_rag.query_process.base: [node_intent_confirm] starting...
+2026-08-28 11:15:43,184 [INFO] httpx2: HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-28 11:15:44,111 [INFO] finance_knowledge_rag.query_process.nodes.node_intent_confirm: Extracted topics: ['风控与反洗钱'], rewritten: '反洗钱的大额交易报告标准是多少？'
+2026-08-28 11:15:44,442 [INFO] finance_knowledge_rag.utils.milvus_utils: Hybrid search completed on 'finance_item_names'
+2026-08-28 11:15:44,483 [INFO] finance_knowledge_rag.query_process.base: [node_intent_confirm] finished
+2026-08-28 11:15:44,484 [INFO] finance_knowledge_rag.query_process.base: [node_search_embedding] starting...
+2026-08-28 11:15:44,777 [INFO] finance_knowledge_rag.utils.milvus_utils: Hybrid search completed on 'finance_chunks'
+2026-08-28 11:15:44,777 [INFO] finance_knowledge_rag.query_process.base: [node_search_embedding] finished
+2026-08-28 11:15:44,777 [INFO] finance_knowledge_rag.query_process.base: [node_rrf] starting...
+2026-08-28 11:15:44,777 [INFO] finance_knowledge_rag.query_process.nodes.node_rrf: RRF fusion: 10 input -> 5 output
+2026-08-28 11:15:44,777 [INFO] finance_knowledge_rag.query_process.base: [node_rrf] finished
+2026-08-28 11:15:44,777 [INFO] finance_knowledge_rag.query_process.base: [node_rerank] starting...
+2026-08-28 11:15:44,939 [WARNING] finance_knowledge_rag.query_process.nodes.node_rerank: Reranker unavailable (Reranker API call failed: status_code=401, message=Invalid API-key provided.), fallback to RRF order
+2026-08-28 11:15:44,939 [INFO] finance_knowledge_rag.query_process.nodes.node_rerank: Rerank: 5 input -> 5 output
+2026-08-28 11:15:44,939 [INFO] finance_knowledge_rag.query_process.base: [node_rerank] finished
+2026-08-28 11:15:44,940 [INFO] finance_knowledge_rag.query_process.base: [node_answer_output] starting...
+2026-08-28 11:15:45,043 [INFO] httpx2: HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-28 11:15:46,726 [INFO] finance_knowledge_rag.query_process.base: [node_answer_output] finished
+INFO:     127.0.0.1:49162 - "POST /api/rag/query HTTP/1.1" 200 OK
+2026-08-28 11:16:59,756 [INFO] finance_knowledge_rag.query_process.base: [node_intent_confirm] starting...
+2026-08-28 11:17:00,055 [INFO] httpx2: HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-28 11:17:00,878 [INFO] finance_knowledge_rag.query_process.nodes.node_intent_confirm: Extracted topics: ['信用卡'], rewritten: '信用卡白金卡额度是多少？'
+2026-08-28 11:17:01,253 [INFO] finance_knowledge_rag.utils.milvus_utils: Hybrid search completed on 'finance_item_names'
+2026-08-28 11:17:01,295 [INFO] finance_knowledge_rag.query_process.base: [node_intent_confirm] finished
+2026-08-28 11:17:01,295 [INFO] finance_knowledge_rag.query_process.base: [node_search_embedding] starting...
+2026-08-28 11:17:01,585 [INFO] finance_knowledge_rag.utils.milvus_utils: Hybrid search completed on 'finance_chunks'
+2026-08-28 11:17:01,586 [INFO] finance_knowledge_rag.query_process.base: [node_search_embedding] finished
+2026-08-28 11:17:01,586 [INFO] finance_knowledge_rag.query_process.base: [node_rrf] starting...
+2026-08-28 11:17:01,586 [INFO] finance_knowledge_rag.query_process.nodes.node_rrf: RRF fusion: 10 input -> 5 output
+2026-08-28 11:17:01,586 [INFO] finance_knowledge_rag.query_process.base: [node_rrf] finished
+2026-08-28 11:17:01,586 [INFO] finance_knowledge_rag.query_process.base: [node_rerank] starting...
+2026-08-28 11:17:01,751 [WARNING] finance_knowledge_rag.query_process.nodes.node_rerank: Reranker unavailable (Reranker API call failed: status_code=401, message=Invalid API-key provided.), fallback to RRF order
+2026-08-28 11:17:01,751 [INFO] finance_knowledge_rag.query_process.nodes.node_rerank: Rerank: 5 input -> 5 output
+2026-08-28 11:17:01,751 [INFO] finance_knowledge_rag.query_process.base: [node_rerank] finished
+2026-08-28 11:17:01,752 [INFO] finance_knowledge_rag.query_process.base: [node_answer_output] starting...
+2026-08-28 11:17:02,378 [INFO] httpx2: HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-28 11:17:03,025 [INFO] finance_knowledge_rag.query_process.base: [node_answer_output] finished
+INFO:     127.0.0.1:49211 - "POST /api/rag/query HTTP/1.1" 200 OK

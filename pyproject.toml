@@ -1,0 +1,26 @@
+[project]
+name = "finance-knowledge-rag"
+version = "1.0.0"
+description = "金融知识库 RAG 服务: 文档导入 + 知识问答, 独立于客服后端, 通过 HTTP 提供能力"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "pydantic>=2.0",
+    "python-dotenv>=1.0",
+    "langchain>=0.3.0",
+    "langchain-openai>=0.2.0",
+    "langchain-text-splitters>=0.0.3",
+    "langgraph>=0.2.0",
+    # pymilvus 必须钉死 2.4.x: 3.x 移除了 pymilvus.model 子模块(BGE-M3 嵌入函数依赖)
+    "pymilvus==2.4.9",
+    "milvus_model>=0.1.0",
+    "flagembedding>=1.2.0",
+    "pymongo>=4.0",
+    "dashscope>=1.20.0",
+    "minio>=7.2.0",
+    # 版本坑: setuptools>=81 移除 pkg_resources; marshmallow>=4 移除 __version_info__,
+    # 两者会导致 milvus_model / flagembedding 导入失败
+    "setuptools<81",
+    "marshmallow<4",
+]
